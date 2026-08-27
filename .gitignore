@@ -1,0 +1,7 @@
+**/.env
+
+.local-context/
+
+
+#pihole
+pihole/etc-pihole/
