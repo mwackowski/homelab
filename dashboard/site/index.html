@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A lightweight home for local homelab services.">
+    <title>Homelab</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Homelab home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M4 10.5 12 4l8 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z"/>
+              <path d="M9 20v-6h6v6M8 10h8"/>
+            </svg>
+          </span>
+          <span>homelab</span>
+        </a>
+
+        <div class="network-status" aria-label="Network scope: local">
+          <span class="status-dot" aria-hidden="true"></span>
+          Local network
+        </div>
+      </header>
+
+      <main>
+        <section class="services" aria-labelledby="services-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Directory</p>
+              <h2 id="services-title">Services</h2>
+            </div>
+            <p>Select an available service to open its dashboard.</p>
+          </div>
+
+          <div class="service-grid">
+            <a class="service-card service-card--active" href="http://pihole.home.arpa/admin/">
+              <span class="service-icon service-icon--pihole" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img">
+                  <path d="M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
+                  <path d="M12 5V2m0 9v5m-2.5-2.5h5M8.5 7.5 6.4 5.4m9.1 2.1 2.1-2.1"/>
+                </svg>
+              </span>
+              <span class="service-content">
+                <span class="service-meta">
+                  <span class="service-state">Available</span>
+                  <span aria-hidden="true">01</span>
+                </span>
+                <strong>Pi-hole</strong>
+                <span>Network-wide DNS and ad blocking</span>
+              </span>
+              <span class="service-arrow" aria-hidden="true">&nearr;</span>
+            </a>
+
+            <article class="service-card service-card--planned">
+              <span class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img">
+                  <path d="M4 19V9m5 10V5m5 14v-7m5 7V3"/>
+                </svg>
+              </span>
+              <span class="service-content">
+                <span class="service-meta">
+                  <span class="service-state">Planned</span>
+                  <span aria-hidden="true">02</span>
+                </span>
+                <strong>Monitoring</strong>
+                <span>Health, temperature and resources</span>
+              </span>
+            </article>
+
+            <article class="service-card service-card--planned">
+              <span class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img">
+                  <ellipse cx="12" cy="6" rx="7" ry="3"/>
+                  <path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>
+                </svg>
+              </span>
+              <span class="service-content">
+                <span class="service-meta">
+                  <span class="service-state">Planned</span>
+                  <span aria-hidden="true">03</span>
+                </span>
+                <strong>Storage</strong>
+                <span>Backups and shared data</span>
+              </span>
+            </article>
+
+            <article class="service-card service-card--planned">
+              <span class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img">
+                  <path d="M12 3 5 6v5c0 4.6 2.8 8.8 7 10 4.2-1.2 7-5.4 7-10V6z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </span>
+              <span class="service-content">
+                <span class="service-meta">
+                  <span class="service-state">Planned</span>
+                  <span aria-hidden="true">04</span>
+                </span>
+                <strong>Remote access</strong>
+                <span>Private access away from home</span>
+              </span>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>Private infrastructure</span>
+        <span>home.arpa</span>
+      </footer>
+    </div>
+  </body>
+</html>
