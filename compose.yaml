@@ -1,0 +1,5 @@
+name: homelab
+
+include:
+  - pihole/compose.yaml
+  - dashboard/compose.yaml
