@@ -20,6 +20,9 @@ services:
       FTLCONF_webserver_api_password: "${WEBSERVER_API_PASSWORD}"
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'ALL'
       FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_misc_dnsmasq_lines: |-
+        address=/home.arpa/${PIHOLE_IP_ADDRESS}
+
     # Volumes store your data between container upgrades
     volumes:
       # For persisting Pi-hole's databases and common configuration file
