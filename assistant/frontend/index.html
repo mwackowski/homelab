@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple local chatbot interface.">
+    <title>Homelab Chat</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <main class="chat-shell">
+        <header class="chat-header">
+          <div>
+            <p class="eyebrow">Homelab</p>
+            <h1>Chat</h1>
+          </div>
+          <span class="local-badge">
+            <span class="status-dot" aria-hidden="true"></span>
+            Local
+          </span>
+        </header>
+
+        <section
+          id="messages"
+          class="messages"
+          aria-label="Conversation"
+          aria-live="polite"
+        >
+          <div class="empty-state" id="empty-state">
+            <h2>How can I help?</h2>
+            <p>Send a message to start the conversation.</p>
+          </div>
+        </section>
+
+        <form id="chat-form" class="composer">
+          <label class="sr-only" for="message-input">Message</label>
+          <textarea
+            id="message-input"
+            name="message"
+            rows="1"
+            placeholder="Write a message..."
+            autocomplete="off"
+            required
+          ></textarea>
+          <button type="submit" aria-label="Send message">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 12 14-8-4 16-3-6z"/>
+              <path d="m12 14 7-10"/>
+            </svg>
+          </button>
+        </form>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

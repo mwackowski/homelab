@@ -1,7 +1,10 @@
-**/.env
+*.env
 
 .local-context/
 
-
-#pihole
+# pihole
 pihole/etc-pihole/
+
+# backend
+.venv/
+*.ipynb
