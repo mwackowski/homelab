@@ -7,4 +7,6 @@ pihole/etc-pihole/
 
 # backend
 .venv/
+__pycache__/
+*.py[cod]
 *.ipynb

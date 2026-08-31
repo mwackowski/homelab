@@ -1,17 +1,56 @@
-services:
-  assistant-ui:
-    container_name: homelab-assistant-ui
-    image: nginx:alpine
-    ports:
-      - "8081:80"
-    volumes:
-      - "./frontend:/usr/share/nginx/html:ro"
-      - "./nginx.conf:/etc/nginx/conf.d/default.conf:ro"
-    depends_on:
-      - assistant-api
-    restart: unless-stopped
+  services:
+    assistant-ui:
+      container_name: homelab-assistant-ui
+      image: nginx:alpine
+      ports:
+        - "8081:80"
+      volumes:
+        - "./frontend:/usr/share/nginx/html:ro"
+        - "./nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+      depends_on:
+        - assistant-api
+      restart: unless-stopped
 
-  assistant-api:
-    container_name: homelab-assistant-api
-    build: ./backend
-    restart: unless-stopped
+    assistant-api:
+      container_name: homelab-assistant-api
+      build: ./backend
+      environment:
+        OPENAI_API_KEY: ${OPENAI_API_KEY}
+        DATABASE_URL: postgresql://assistant:${POSTGRES_PASSWORD}@assistant-postgres:5432/assistant
+        QDRANT_HOST: assistant-qdrant
+        QDRANT_PORT: "6333"
+      depends_on:
+        assistant-postgres:
+          condition: service_healthy
+        assistant-qdrant:
+          condition: service_started
+      restart: unless-stopped
+
+    assistant-postgres:
+      container_name: homelab-assistant-postgres
+      image: postgres:16-alpine
+      ports:
+        - "5422:5432"
+      environment:
+        POSTGRES_USER: assistant
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: assistant
+      volumes:
+        - assistant_postgres_data:/var/lib/postgresql/data
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U assistant -d assistant"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+      restart: unless-stopped
+
+    assistant-qdrant:
+      container_name: homelab-assistant-qdrant
+      image: qdrant/qdrant:latest
+      volumes:
+        - assistant_qdrant_data:/qdrant/storage
+      restart: unless-stopped
+
+  volumes:
+    assistant_postgres_data:
+    assistant_qdrant_data:
