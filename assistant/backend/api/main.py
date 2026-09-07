@@ -1,9 +1,11 @@
 import logging
 from uuid import uuid4
 
+from agent.loop import run_agent
+from agent.setup import create_tool_registry
 from fastapi import FastAPI, HTTPException
 from llm.client import LLMClient
-from llm.models import MODELS, Message
+from llm.models import MODELS
 from pydantic import BaseModel
 
 logging.basicConfig(
@@ -27,13 +29,10 @@ class ChatResponse(BaseModel):
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest) -> ChatResponse:
     request_id = uuid4().hex
+    registry = create_tool_registry()
     try:
-        reply = await llm_client.complete(
-            [
-                Message(role="system", content="you are a helpful assistant"),
-                Message(role="user", content=request.message),
-            ]
-        )
+        message = await run_agent(llm_client, request.message, registry)
+        reply = message.content or ""
     except Exception:
         logger.exception("[%s] Model request failed", request_id)
         raise HTTPException(

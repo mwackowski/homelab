@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY requirements-frozen.txt .
 RUN pip install --no-cache-dir -r requirements-frozen.txt
+RUN apk add --no-cache openssh-client
 
+COPY agent ./agent
 COPY api ./api
 COPY llm ./llm
 

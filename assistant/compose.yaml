@@ -14,11 +14,16 @@
     assistant-api:
       container_name: homelab-assistant-api
       build: ./backend
+      volumes:
+        - ${EDGE_SSH_KEY_PATH}:/run/ssh/homelab_agent:ro
+        - ${EDGE_SSH_KNOWN_HOSTS_PATH}:/root/.ssh/known_hosts:ro
       environment:
         OPENAI_API_KEY: ${OPENAI_API_KEY}
         DATABASE_URL: postgresql://assistant:${POSTGRES_PASSWORD}@assistant-postgres:5432/assistant
         QDRANT_HOST: assistant-qdrant
         QDRANT_PORT: "6333"
+        EDGE_SSH_HOST: ${EDGE_SSH_HOST}
+        EDGE_SSH_KEY_PATH: /run/ssh/homelab_agent
       depends_on:
         assistant-postgres:
           condition: service_healthy

@@ -7,15 +7,19 @@ class LLMClient:
     def __init__(self, model: ModelConfig):
         self.model = model
 
-    async def complete(self, messages: list[Message]) -> str:
+    async def complete(self, messages: list[Message], definitions: list[dict]):
         response = await acompletion(
             model=self.model.name,
-            messages=[message.model_dump() for message in messages],
+            messages=[message.model_dump(exclude_none=True) for message in messages],
+            tools=[
+                {
+                    "type": "function",
+                    "function": definition,
+                }
+                for definition in definitions
+            ],
             max_tokens=self.model.max_tokens,
         )
 
-        content = response.choices[0].message.content
-        if not content:
-            raise RuntimeError("Model returned no text")
-
+        content = response.choices[0].message
         return content
