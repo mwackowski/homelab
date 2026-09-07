@@ -3,7 +3,7 @@
 .local-context/
 
 # pihole
-pihole/etc-pihole/
+edge/pihole/etc-pihole/
 
 # backend
 .venv/

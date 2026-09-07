@@ -25,9 +25,10 @@ not published directly to the LAN. nginx forwards `/api/` requests to it.
 
 ```text
 .
-├── compose.yaml       # Core homelab stack
-├── pihole/           # Pi-hole configuration
-├── dashboard/        # Homelab dashboard
+├── edge/             # Edge host stack
+│   ├── compose.yaml
+│   ├── pihole/       # Pi-hole configuration
+│   └── dashboard/    # Homelab dashboard
 └── assistant/        # Assistant frontend and backend
     ├── frontend/
     ├── backend/
@@ -35,5 +36,26 @@ not published directly to the LAN. nginx forwards `/api/` requests to it.
     └── nginx.conf
 ```
 
-The root Compose project runs Pi-hole and the dashboard. The assistant has its
-own Compose project and can be deployed independently.
+The `edge/compose.yaml` project runs Pi-hole and the dashboard on the edge host.
+It retains the project name `homelab`. The assistant has its own Compose project
+for the core host and can be deployed independently.
+
+## Running the stacks
+
+From the repository root on the appropriate host, supply the environment file
+for that deployment:
+
+```bash
+# Edge host: Pi-hole and dashboard
+docker compose --env-file .env -f edge/compose.yaml up -d
+
+# Core host: assistant and data services
+docker compose --env-file assistant/.env -f assistant/compose.yaml up -d --build
+```
+
+Use `edge/pihole/.env.example` and `assistant/.env.example` as configuration
+references. SSH mount paths must point to files on the machine running Docker.
+
+When updating an existing edge deployment, move its Pi-hole data directory from
+`pihole/etc-pihole/` to `edge/pihole/etc-pihole/` before recreating containers.
+The project name is unchanged, but bind mounts now use the new paths.
